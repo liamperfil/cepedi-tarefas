@@ -1,0 +1,32 @@
+{% extends 'tarefas/base.html' %}
+{% block body %}
+<div class="progress-container">
+    <label>Progresso</label>
+    <div class="progress-bar">
+        <div class="progress" style="width: 100%;"></div>
+    </div>
+    <div class="progress-count">{{completed}}/{{total}}</div>
+</div>
+
+<form class="task-form" method="POST" action="{% url 'add' %}">
+    {% csrf_token %}
+    <input name="label" type="text" placeholder="$ adicionar nova tarefa..." required autofocus />
+    <button type="submit">ADD</button>
+</form>
+{% if tasks %}
+<ul class="task-list">
+    {% for task in tasks %}
+    <li class="completed">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="checkbox" onChange="this.form.submit()" {% if task.done %} checked {% endif %}/>
+        </form>
+        <span>{{ task.label }}</span>
+        <a href="" class="delete">×</a>
+    </li>
+    {% endfor %}
+{% endif %}
+</ul>
+
+<p class="footer">faltam 4 tarefas • Bora codar!</p>
+{% endblock %}
