@@ -28,5 +28,14 @@
 {% endif %}
 </ul>
 
-<p class="footer">faltam {{remaining}} tarefas • Vamos codar!</p>
+{% if remaining %}
+    {% if remaining == 1 %}
+        <p class="footer">falta {{remaining}} tarefa • Vamos codar!</p>
+    {% endif %}
+    {% if remaining > 1 %}
+        <p class="footer">faltam {{remaining}} tarefas • Vamos codar!</p>
+    {% endif %}
+{% else %}
+    <p class="footer">nenhuma tarefa pendente • parabéns!</p>
+{% endif %}
 {% endblock %}
