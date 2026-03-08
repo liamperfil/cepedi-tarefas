@@ -3,7 +3,7 @@
 <div class="progress-container">
     <label>Progresso</label>
     <div class="progress-bar">
-        <div class="progress" style="width: 100%;"></div>
+        <div class="progress" style="width: {{pct}}%;"></div>
     </div>
     <div class="progress-count">{{completed}}/{{total}}</div>
 </div>
@@ -16,17 +16,17 @@
 {% if tasks %}
 <ul class="task-list">
     {% for task in tasks %}
-    <li class="completed">
-        <form method="POST">
+    <li {% if task.done %}class="completed"{% endif %}>
+        <form method="POST" action="{% url 'toggle' task.id %}">
             {% csrf_token %}
             <input type="checkbox" onChange="this.form.submit()" {% if task.done %} checked {% endif %}/>
         </form>
         <span>{{ task.label }}</span>
-        <a href="" class="delete">×</a>
+        <a href="{% url 'delete' task.id %}" class="delete">X</a>
     </li>
     {% endfor %}
 {% endif %}
 </ul>
 
-<p class="footer">faltam 4 tarefas • Bora codar!</p>
+<p class="footer">faltam {{remaining}} tarefas • Vamos codar!</p>
 {% endblock %}

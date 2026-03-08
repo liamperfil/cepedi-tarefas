@@ -31,3 +31,14 @@ def add(request):
     if form.is_valid():
         form.save()
     return redirect('home')
+
+def toggle(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.done = not task.done
+    task.save()
+    return redirect('home')
+
+def delete(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.delete()
+    return redirect('home')
